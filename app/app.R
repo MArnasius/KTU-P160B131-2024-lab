@@ -25,5 +25,14 @@ server <- function(input, output, session) {
   updateSelectizeInput(session, "kodas", choices = data$name , server = TRUE)
   
   
-  output$plot <- renderPlot(
-    data %>%
+   output$plot <- renderPlot(
+     data %>%
+       filter(name == input$kodas) %>%
+     ggplot(aes(x = ym(month), y = avgWage)) +
+     geom_point(col = 'blue') +
+     geom_line(col = 'yellow') +
+     labs(x = "Mėnesis", y = "Vid. atlygis")
+     )
+  }
+shinyApp( ui = ui, server = server )
+  
